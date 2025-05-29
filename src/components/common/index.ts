@@ -1,1 +1,1 @@
-export { default as GlobalStyle } from "./global";
+export { default as Text } from "./Text/Text";
