@@ -1,6 +1,6 @@
 "use client";
 
-import { GlobalStyle } from "@/components/common";
+import { GlobalStyle } from "@/components/desgin-system";
 import { ReactNode } from "react";
 import { RecoilRoot } from "recoil";
 
