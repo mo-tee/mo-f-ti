@@ -3,6 +3,13 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
+@font-face {
+    font-family: 'KIMM_Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KIMM_Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
