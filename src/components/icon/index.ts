@@ -1,0 +1,9 @@
+export { default as IconHome } from "./IconHome";
+export { default as IconGoal } from "./IconGoal";
+export { default as IconProfile } from "./IconProfile";
+export { default as IconQuiz } from "./IconQuiz";
+export { default as IconShop } from "./IconShop";
+export { default as IconBadge } from "./IconBadge";
+export { default as IconArrow } from "./IconArrow";
+export { default as IconCoin } from "./IconCoin";
+export { default as IconBackArrow } from "./IconBackArrow";
