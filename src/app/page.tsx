@@ -63,7 +63,12 @@ const StyledLogin = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: #f7fafc;
+  margin: 0 auto;
   padding: 117px 16px 93px;
+
+  @media (min-width: 601px) {
+    width: 375px;
+  }
 `;
 
 const StyledImageWrap = styled.div`
