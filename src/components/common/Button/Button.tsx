@@ -29,6 +29,6 @@ const StyledButton = styled.div`
   margin: 0 auto;
 
   @media (min-width: 601px) {
-    width: 360px;
+    width: 343px;
   }
 `;
