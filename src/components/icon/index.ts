@@ -7,3 +7,5 @@ export { default as IconBadge } from "./IconBadge";
 export { default as IconArrow } from "./IconArrow";
 export { default as IconCoin } from "./IconCoin";
 export { default as IconBackArrow } from "./IconBackArrow";
+export { default as IconBadge01 } from "./IconBadge01";
+export { default as IconTrash } from "./IconTrash";
