@@ -9,9 +9,12 @@ import Image from "next/image";
 import styled from "styled-components";
 import Row from "@/components/common/Flex/Row";
 import { SLIDE } from "@/constants/login/constant";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/constants/common/constant";
 
 const Login = () => {
   const [current, setCurrent] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -19,6 +22,10 @@ const Login = () => {
     }, 2000);
     return () => clearInterval(timer);
   }, []);
+
+  const handleMoveHome = () => {
+    router.push(ROUTES.HOME);
+  };
 
   return (
     <StyledLogin>
@@ -46,7 +53,7 @@ const Login = () => {
             ))}
           </Row>
         </Column>
-        <Button onClick={() => {}}>구글로 모티 시작하기</Button>
+        <Button onClick={handleMoveHome}>구글로 모티 시작하기</Button>
       </Column>
     </StyledLogin>
   );
