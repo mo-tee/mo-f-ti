@@ -14,8 +14,8 @@ const Badge = ({ name, email, profileUrl }: BadgeInterface) => {
   return (
     <StyledBadge>
       <IconBadgeWrapper>
-        <IconBadge width={120} height={120} />
         <ProfileImg src={profileUrl} alt="프로필" />
+        <StyledIconBadge width={120} height={120} />
       </IconBadgeWrapper>
       <NameText>{name}</NameText>
       <Text fontType="Body1" color={color.G300}>
@@ -62,4 +62,12 @@ const ProfileImg = styled.img`
   object-fit: cover;
   transform: translate(-50%, -50%);
   background: white;
+  z-index: 1;
+`;
+
+const StyledIconBadge = styled(IconBadge)`
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  z-index: 2;
 `;
