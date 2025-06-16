@@ -37,6 +37,7 @@ const StyledNavigation = styled.div`
   bottom: 0;
   background-color: ${color.G0};
   padding: 15px 23px 47px;
+  z-index: 2;
   border-radius: 8px 8px 0 0;
 
   @media (min-width: 601px) {
