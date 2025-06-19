@@ -58,7 +58,7 @@ const StyledSuccess = styled.div`
   padding: 59px 16px 109px;
   margin: 0 auto;
   background-color: ${color.G20};
-  gap: 49px;
+  gap: 25px;
 
   @media (min-width: 601px) {
     width: 375px;
@@ -78,6 +78,7 @@ const ScrollList = styled.div`
   overflow-y: auto;
   gap: 14px;
   padding-bottom: 10px;
+  padding-top: 24px;
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
