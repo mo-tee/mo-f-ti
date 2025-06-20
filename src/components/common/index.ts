@@ -2,3 +2,8 @@ export { default as Text } from "./Text/Text";
 export { default as Navigation } from "./Navigation/Navigation";
 export { default as Button } from "./Button/Button";
 export { default as ColorMediumButton } from "./Button/ColorMediumButton";
+export { default as Input } from "./Input/Input";
+export { default as DateInput } from "./Input/DateInput";
+export { default as Diary } from "./Diary/Diary";
+export { default as TextArea } from "./TextArea/TextArea";
+export { default as FileUploader } from "./FileUploader/FileUploader";
