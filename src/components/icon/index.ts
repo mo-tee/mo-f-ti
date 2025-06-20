@@ -11,3 +11,6 @@ export { default as IconBadge01 } from "./IconBadge01";
 export { default as IconTrash } from "./IconTrash";
 export { default as IconSearch } from "./IconSearch";
 export { default as IconShopping } from "./IconShopping";
+export { default as IconDiary } from "./IconDiary";
+export { default as IconArrowLeft } from "./IconArrowLeft";
+export { default as IconArrowRight } from "./IconArrowRight";
