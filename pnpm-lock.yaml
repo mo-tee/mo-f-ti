@@ -11,6 +11,12 @@ dependencies:
   '@tanstack/react-query-devtools':
     specifier: ^5.76.0
     version: 5.76.0(@tanstack/react-query@4.36.1)(react@19.1.0)
+  '@toss/react':
+    specifier: ^1.8.1
+    version: 1.8.1(react@19.1.0)
+  '@toss/use-overlay':
+    specifier: ^1.4.2
+    version: 1.4.2(react@19.1.0)
   axios:
     specifier: ^1.9.0
     version: 1.9.0
@@ -57,6 +63,11 @@ devDependencies:
     version: 5.8.3
 
 packages:
+
+  /@babel/runtime@7.27.6:
+    resolution: {integrity: sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==}
+    engines: {node: '>=6.9.0'}
+    dev: false
 
   /@emnapi/core@1.4.3:
     resolution: {integrity: sha512-4m62DuCE07lw01soJwPiBGC0nAww0Q+RY70VZ+n49yDIO13yyinhbWCeNnaob0lakDtWQzSdtNWzJeOJt2ma+g==}
@@ -574,6 +585,48 @@ packages:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       use-sync-external-store: 1.5.0(react@19.1.0)
+    dev: false
+
+  /@toss/react@1.8.1(react@19.1.0):
+    resolution: {integrity: sha512-jH3oo/7yctexuutj/YgQrddaK1bU2s5659dkJIXOe23bEjkY+lbhvEz2FLEhRjSo6k6ktPagpxO4AcdhCi5k5A==}
+    peerDependencies:
+      react: ^16.0.0 || ^17.0.0 || ^18
+    dependencies:
+      '@babel/runtime': 7.27.6
+      '@toss/storage': 1.4.1
+      '@toss/utils': 1.6.1
+      classnames: 2.5.1
+      lodash.debounce: 4.0.8
+      lodash.throttle: 4.1.1
+      react: 19.1.0
+    dev: false
+
+  /@toss/storage@1.4.1:
+    resolution: {integrity: sha512-jvnBXAQ/Fqqdt+gqYKeHYk7SzR2LX/FC50JIoVI0RldG1mDh1tebOqD7XkrZ89q77t/RwTuh60+8fjZDgend/g==}
+    dependencies:
+      '@babel/runtime': 7.27.6
+    dev: false
+
+  /@toss/use-overlay@1.4.2(react@19.1.0):
+    resolution: {integrity: sha512-OYJKSKkldho8qrJR0xMJLpz85H68+E+y6H3y/N0XUed/b0ytbfU+fuxcPd14uiC8H0xzliTGBlY8GQP9Z/lteQ==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    peerDependencies:
+      react: ^16.8 || ^17 || ^18
+    dependencies:
+      react: 19.1.0
+    dev: false
+
+  /@toss/utility-types@1.2.1:
+    resolution: {integrity: sha512-1y8s1bvmuhuMX/d6qR9mmvcgFZIKYIQqJbAIshlGArXkjk/ec67gXc5uByEV1Y7in9ZhrGNRmjD8DTH0988vpQ==}
+    dev: false
+
+  /@toss/utils@1.6.1:
+    resolution: {integrity: sha512-x6m8jLKWtAmCbxTLXbgTzJ5wZyRSUQPLpR/oLJP1ZK9ytXcRf03oA46W/+78kErUkEw/yQz2L+t2xFDHSeZ6IQ==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    dependencies:
+      '@babel/runtime': 7.27.6
+      '@toss/utility-types': 1.2.1
+      date-fns: 2.30.0
     dev: false
 
   /@tybys/wasm-util@0.9.0:
@@ -1149,6 +1202,10 @@ packages:
       supports-color: 7.2.0
     dev: true
 
+  /classnames@2.5.1:
+    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
+    dev: false
+
   /client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
     dev: false
@@ -1277,6 +1334,13 @@ packages:
       es-errors: 1.3.0
       is-data-view: 1.0.2
     dev: true
+
+  /date-fns@2.30.0:
+    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
+    engines: {node: '>=0.11'}
+    dependencies:
+      '@babel/runtime': 7.27.6
+    dev: false
 
   /dayjs@1.11.13:
     resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
@@ -2461,9 +2525,17 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash.debounce@4.0.8:
+    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
+    dev: false
+
   /lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
+
+  /lodash.throttle@4.1.1:
+    resolution: {integrity: sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==}
+    dev: false
 
   /loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
