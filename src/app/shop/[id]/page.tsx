@@ -18,7 +18,7 @@ const ShopDetail = () => {
     <StyledShopDetail>
       <IconWrapper>
         <div onClick={handleMoveBack}>
-          <IconBackArrow width={24} height={24} />
+          <IconBackArrow width={24} height={24} fill={color.G900} />
         </div>
       </IconWrapper>
       <DetailContentScroll>

@@ -20,7 +20,7 @@ const GoalDetail = () => {
     <StyledProgress>
       <Row alignItems="center" justifyContent="space-between" width="100%">
         <div onClick={handleBack}>
-          <IconBackArrow width={24} height={24} />
+          <IconBackArrow width={24} height={24} fill={color.G900} />
         </div>
         <Text fontType="Label1" color={color.G900}>
           목표 상세 보기
