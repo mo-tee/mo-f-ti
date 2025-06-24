@@ -3,6 +3,7 @@
 import { GlobalStyle } from "@/components/desgin-system";
 import { ReactNode } from "react";
 import { RecoilRoot } from "recoil";
+import { OverlayProvider } from "@toss/use-overlay";
 
 interface ProviderProps {
   children: ReactNode;
@@ -11,8 +12,10 @@ interface ProviderProps {
 const Provider = ({ children }: ProviderProps) => {
   return (
     <RecoilRoot>
-      <GlobalStyle />
-      {children}
+      <OverlayProvider>
+        <GlobalStyle />
+        {children}
+      </OverlayProvider>
     </RecoilRoot>
   );
 };
