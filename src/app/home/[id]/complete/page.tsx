@@ -3,17 +3,20 @@
 import { Navigation, Text } from "@/components/common";
 import Row from "@/components/common/Flex/Row";
 import { color } from "@/components/desgin-system";
-import { GoalDetailContent } from "@/components/home";
+import {
+  CompleteFailContent,
+  CompleteSuccessContent,
+  GoalDetailCompleteContent,
+} from "@/components/home";
 import { IconBackArrow } from "@/components/icon";
+import { useGoalCompleteStepValueStore } from "@/stores/goal/goalCompleteStep";
 import { flex } from "@/utils";
+import { SwitchCase } from "@toss/react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
-interface GoalDetailProps {
-  params: { id: number };
-}
-
-const GoalDetail = ({ params: { id } }: GoalDetailProps) => {
+const GoalDetailComplete = () => {
+  const completeStep = useGoalCompleteStepValueStore();
   const router = useRouter();
 
   const handleBack = () => {
@@ -21,7 +24,7 @@ const GoalDetail = ({ params: { id } }: GoalDetailProps) => {
   };
 
   return (
-    <StyledProgress>
+    <StyledGoalDetailComplete>
       <Row alignItems="center" justifyContent="space-between" width="100%">
         <div onClick={handleBack}>
           <IconBackArrow width={24} height={24} fill={color.G900} />
@@ -31,17 +34,22 @@ const GoalDetail = ({ params: { id } }: GoalDetailProps) => {
         </Text>
         <BlankBox />
       </Row>
-      <ScrollList>
-        <GoalDetailContent id={id} />
-      </ScrollList>
+      <SwitchCase
+        value={completeStep}
+        caseBy={{
+          목표달성: <GoalDetailCompleteContent />,
+          달성성공: <CompleteSuccessContent />,
+          달성실패: <CompleteFailContent />,
+        }}
+      />
       <Navigation />
-    </StyledProgress>
+    </StyledGoalDetailComplete>
   );
 };
 
-export default GoalDetail;
+export default GoalDetailComplete;
 
-const StyledProgress = styled.div`
+const StyledGoalDetailComplete = styled.div`
   ${flex({
     flexDirection: "column",
     alignItems: "center",
@@ -62,17 +70,4 @@ const BlankBox = styled.div`
   width: 24px;
   height: 24px;
   background-color: none;
-`;
-
-const ScrollList = styled.div`
-  flex: 1 1 auto;
-  min-height: 0;
-  width: 100%;
-  overflow-y: auto;
-  gap: 14px;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;

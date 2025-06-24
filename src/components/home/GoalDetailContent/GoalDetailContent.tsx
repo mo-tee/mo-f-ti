@@ -7,8 +7,23 @@ import styled from "styled-components";
 import Point from "./Point/Point";
 import Research from "./Research/Research";
 import Method from "./Method/Method";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/constants/common/constant";
+import { useSetGoalCompleteStepStore } from "@/stores/goal/goalCompleteStep";
 
-const GoalDetailContent = () => {
+interface GoalDetailContentProps {
+  id: number;
+}
+
+const GoalDetailContent = ({ id }: GoalDetailContentProps) => {
+  const router = useRouter();
+  const setCompleteStep = useSetGoalCompleteStepStore();
+
+  const handleMoveGoalDetailComplete = () => {
+    router.push(`${ROUTES.HOME}/${id}/complete`);
+    setCompleteStep("목표달성");
+  };
+
   return (
     <StyledGoalDetailContent>
       <Column gap={20} width="100%">
@@ -21,7 +36,7 @@ const GoalDetailContent = () => {
             <ColorMediumButton
               color={color.Primary}
               backgroundColor="rgba(13, 128, 242, 0.1)"
-              onClick={() => {}}
+              onClick={handleMoveGoalDetailComplete}
             >
               목표 달성 완료
             </ColorMediumButton>

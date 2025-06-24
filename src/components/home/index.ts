@@ -4,3 +4,6 @@ export { default as ProgressList } from "./ProgressList/ProgressList";
 export { default as SuccessList } from "./SuccessList/SuccessList";
 export { default as GoalItem } from "./GoalItem/GoalItem";
 export { default as GoalDetailContent } from "./GoalDetailContent/GoalDetailContent";
+export { default as GoalDetailCompleteContent } from "./GoalDetailCompleteContent/GoalDetailCompleteContent";
+export { default as CompleteSuccessContent } from "./CompleteSuccessContent/CompleteSuccessContent";
+export { default as CompleteFailContent } from "./CompleteFailContent/CompleteFailContent";
