@@ -7,3 +7,5 @@ export { default as DateInput } from "./Input/DateInput";
 export { default as Diary } from "./Diary/Diary";
 export { default as TextArea } from "./TextArea/TextArea";
 export { default as FileUploader } from "./FileUploader/FileUploader";
+export { default as ToggleButton } from "./Button/ToggleButton";
+export { default as Popup } from "./Popup/Popup";
