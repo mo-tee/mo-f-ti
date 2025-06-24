@@ -21,3 +21,8 @@ export { default as IconBadge06 } from "./IconBadge06";
 export { default as IconBadge07 } from "./IconBadge07";
 export { default as IconBadge08 } from "./IconBadge08";
 export { default as IconBadge09 } from "./IconBadge09";
+export { default as IconLeaf } from "./IconLeaf";
+export { default as IconSmile } from "./IconSmile";
+export { default as IconX } from "./IconX";
+export { default as IconPurse } from "./IconPurse";
+export { default as IconCancel } from "./IconCancel";
