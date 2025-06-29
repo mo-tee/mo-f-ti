@@ -5,16 +5,19 @@ import {
   FileUploader,
   Input,
   TextArea,
+  ThumbnailInput,
 } from "@/components/common";
 import Column from "@/components/common/Flex/Column";
 import { flex } from "@/utils";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import ExelPassword from "../ExelPassword/ExelPassword";
+import DetailReason from "../DetailReason/DetailReason";
 
 const GoalCreateContent = () => {
   const [showDiary, setShowDiary] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
+  const [thumbnail, setThumbnail] = useState<File | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -49,6 +52,7 @@ const GoalCreateContent = () => {
 
   return (
     <StyledGoalCreateContent>
+      <ThumbnailInput onChange={setThumbnail} />
       <Column gap={72} width="100%">
         <Column gap={32} width="100%">
           <Input
@@ -75,6 +79,7 @@ const GoalCreateContent = () => {
           />
           <FileUploader />
           <ExelPassword />
+          <DetailReason />
         </Column>
         <Button onClick={() => {}}>소비 목표 생성</Button>
       </Column>
@@ -85,9 +90,9 @@ const GoalCreateContent = () => {
 export default GoalCreateContent;
 
 const StyledGoalCreateContent = styled.div`
-  ${flex({ flexDirection: "column", alignItems: "flex-start" })}
+  ${flex({ flexDirection: "column", alignItems: "center" })}
   width: 100%;
   padding-top: 30px;
-  gap: 72px;
+  gap: 40px;
   padding-bottom: 64px;
 `;
