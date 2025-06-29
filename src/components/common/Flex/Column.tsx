@@ -24,4 +24,5 @@ export default Column;
 
 const StyledColumn = styled.div`
   ${flex({ flexDirection: "column" })}
+  width: 100%;
 `;
