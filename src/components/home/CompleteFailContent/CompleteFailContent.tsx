@@ -4,9 +4,19 @@ import Row from "@/components/common/Flex/Row";
 import { color } from "@/components/desgin-system";
 import { IconX } from "@/components/icon";
 import { flex } from "@/utils";
+import { useOverlay } from "@toss/use-overlay";
 import styled from "styled-components";
+import GiveUpModal from "../GiveUpModal/GiveUpModal";
 
 const CompleteFailContent = () => {
+  const overlay = useOverlay();
+
+  const handleOpenGiveUpModal = () => {
+    overlay.open(({ isOpen, close }) => (
+      <GiveUpModal isOpen={isOpen} onClose={close} />
+    ));
+  };
+
   return (
     <StyledCompleteFailContent>
       <ContentWrapper>
@@ -26,7 +36,7 @@ const CompleteFailContent = () => {
       </ContentWrapper>
       <Row gap={12} width="100%" alignItems="center">
         <ColorMediumButton
-          onClick={() => {}}
+          onClick={handleOpenGiveUpModal}
           color={color.G100}
           backgroundColor="rgba(134, 134, 134, 0.10)"
         >

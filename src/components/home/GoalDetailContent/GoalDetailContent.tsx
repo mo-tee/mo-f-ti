@@ -10,6 +10,8 @@ import Method from "./Method/Method";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/constants/common/constant";
 import { useSetGoalCompleteStepStore } from "@/stores/goal/goalCompleteStep";
+import { useOverlay } from "@toss/use-overlay";
+import GiveUpModal from "../GiveUpModal/GiveUpModal";
 
 interface GoalDetailContentProps {
   id: number;
@@ -17,11 +19,18 @@ interface GoalDetailContentProps {
 
 const GoalDetailContent = ({ id }: GoalDetailContentProps) => {
   const router = useRouter();
+  const overlay = useOverlay();
   const setCompleteStep = useSetGoalCompleteStepStore();
 
   const handleMoveGoalDetailComplete = () => {
     router.push(`${ROUTES.HOME}/${id}/complete`);
     setCompleteStep("목표달성");
+  };
+
+  const handleOpenGiveUpModal = () => {
+    overlay.open(({ isOpen, close }) => (
+      <GiveUpModal isOpen={isOpen} onClose={close} />
+    ));
   };
 
   return (
@@ -43,7 +52,7 @@ const GoalDetailContent = ({ id }: GoalDetailContentProps) => {
             <ColorMediumButton
               color={color.Secondary}
               backgroundColor="rgba(241, 38, 38, 0.1)"
-              onClick={() => {}}
+              onClick={handleOpenGiveUpModal}
             >
               목표 달성 포기
             </ColorMediumButton>
