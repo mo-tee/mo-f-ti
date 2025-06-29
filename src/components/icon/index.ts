@@ -26,3 +26,6 @@ export { default as IconSmile } from "./IconSmile";
 export { default as IconX } from "./IconX";
 export { default as IconPurse } from "./IconPurse";
 export { default as IconCancel } from "./IconCancel";
+export { default as IconPlus } from "./IconPlus";
+export { default as IconCheckBoxBlank } from "./IconCheckBoxBlank";
+export { default as IconCheckBox } from "./IconCheckBox";
