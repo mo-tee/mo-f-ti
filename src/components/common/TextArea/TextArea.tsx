@@ -6,7 +6,7 @@ import { color } from "@/components/desgin-system";
 import { TextareaHTMLAttributes } from "react";
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label: string;
+  label?: string;
   placeholder: string;
 }
 
