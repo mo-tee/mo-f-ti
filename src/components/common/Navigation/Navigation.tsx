@@ -18,7 +18,11 @@ const Navigation = () => {
       <NavigationItem icon={IconShop} name="상점" routes={ROUTES.SHOP} />
       <NavigationItem icon={IconGoal} name="목표 생성" routes={ROUTES.GOAL} />
       <NavigationItem icon={IconQuiz} name="학습" routes={ROUTES.QUIZ} />
-      <NavigationItem icon={IconProfile} name="프로필" routes={ROUTES.PROFILE} />
+      <NavigationItem
+        icon={IconProfile}
+        name="프로필"
+        routes={ROUTES.PROFILE}
+      />
     </StyledNavigation>
   );
 };
@@ -32,11 +36,11 @@ const StyledNavigation = styled.div`
     flexDirection: "row",
   })}
   width: 100%;
-  height: 75px;
+  height: 109px;
   position: fixed;
   bottom: 0;
   background-color: ${color.G0};
-  padding: 15px 23px 13px;
+  padding: 15px 23px 47px;
   z-index: 2;
   border-radius: 8px 8px 0 0;
 

@@ -48,7 +48,7 @@ const StyledProgress = styled.div`
   })}
   width: 100vw;
   height: 100vh;
-  padding: 21px 16px 75px;
+  padding: 59px 16px 109px;
   margin: 0 auto;
   background-color: ${color.G20};
   gap: 25px;

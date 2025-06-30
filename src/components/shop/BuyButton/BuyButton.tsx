@@ -29,11 +29,11 @@ const StyledBuyButton = styled.div`
     flexDirection: "row",
   })}
   width: 100%;
-  height: 75px;
+  height: 109px;
   position: fixed;
   bottom: 0;
   background-color: ${color.G0};
-  padding: 14px 16px 13px;
+  padding: 14px 16px 47px;
   border-radius: 8px 8px 0 0;
 
   @media (min-width: 601px) {

@@ -33,7 +33,7 @@ const StyledShop = styled.div`
   })}
   width: 100vw;
   height: 100vh;
-  padding: 32px 16px 75px;
+  padding: 70px 16px 109px;
   margin: 0 auto;
   background-color: ${color.G10};
   gap: 17.5px;
@@ -48,6 +48,7 @@ const ShopListScroll = styled.div`
   width: 100%;
   min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
   padding-bottom: 10px;
 
   scrollbar-width: none;

@@ -38,7 +38,7 @@ const StyledShopDetail = styled.div`
   })}
   width: 100vw;
   height: 100vh;
-  padding: 21px 16px 75px;
+  padding: 70px 16px 109px;
   margin: 0 auto;
   background-color: ${color.G10};
   gap: 22px;
