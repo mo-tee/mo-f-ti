@@ -72,7 +72,7 @@ const StyledQuizDetail = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: ${color.G10};
-  padding: 70px 16px 109px;
+  padding: 32px 16px 75px;
   margin: 0 auto;
   gap: 12px;
 

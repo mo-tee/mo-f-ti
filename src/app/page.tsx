@@ -66,7 +66,7 @@ const StyledLogin = styled.div`
   height: 100vh;
   background-color: #f7fafc;
   margin: 0 auto;
-  padding: 117px 16px 93px;
+  padding: 70px 16px 59px;
 
   @media (min-width: 601px) {
     width: 375px;

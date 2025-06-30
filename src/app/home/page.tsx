@@ -36,7 +36,7 @@ const StyledHome = styled.div`
   })}
   width: 100vw;
   height: 100%;
-  padding: 59px 16px 149px;
+  padding: 13.5px 16px 115px;
   margin: 0 auto;
   background-color: ${color.G20};
   gap: 36px;

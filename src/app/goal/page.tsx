@@ -31,7 +31,7 @@ const StyledGoal = styled.div`
   height: 100vh;
   background-color: ${color.G20};
   margin: 0 auto;
-  padding: 70px 16px 109px;
+  padding: 32px 16px 75px;
   gap: 14px;
 
   @media (min-width: 601px) {
