@@ -32,11 +32,11 @@ const StyledNavigation = styled.div`
     flexDirection: "row",
   })}
   width: 100%;
-  height: 109px;
+  height: 75px;
   position: fixed;
   bottom: 0;
   background-color: ${color.G0};
-  padding: 15px 23px 47px;
+  padding: 15px 23px 13px;
   z-index: 2;
   border-radius: 8px 8px 0 0;
 
