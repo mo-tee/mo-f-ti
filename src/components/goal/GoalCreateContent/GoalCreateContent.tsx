@@ -94,5 +94,5 @@ const StyledGoalCreateContent = styled.div`
   width: 100%;
   padding-top: 30px;
   gap: 40px;
-  padding-bottom: 64px;
+  padding-bottom: 30px;
 `;
