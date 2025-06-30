@@ -29,12 +29,7 @@ const Login = () => {
 
   return (
     <StyledLogin>
-      <StyledImageWrap
-        style={{
-          width: `${SLIDE[current].width}px`,
-          aspectRatio: `${SLIDE[current].width} / ${SLIDE[current].height}`,
-        }}
-      >
+      <StyledImageWrap>
         <StyledImage
           src={SLIDE[current].image}
           alt="슬라이드 이미지"
