@@ -63,7 +63,7 @@ const StyledCompleteFailContent = styled.div`
     justifyContent: "space-between",
   })}
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding-bottom: 40px;
 `;
 

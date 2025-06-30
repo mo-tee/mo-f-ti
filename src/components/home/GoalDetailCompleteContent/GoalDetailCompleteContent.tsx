@@ -43,5 +43,5 @@ const StyledGoalDetailCompleteContent = styled.div`
   ${flex({ flexDirection: "column", justifyContent: "space-between" })}
   width: 100%;
   height: 100%;
-  padding: 16px 0px 37px;
+  padding: 16px 0px 40px;
 `;
