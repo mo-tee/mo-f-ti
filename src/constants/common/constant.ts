@@ -8,3 +8,8 @@ export const ROUTES = {
   SHOP: "/shop",
   GOAL: "/goal",
 };
+
+export const TOKEN = {
+  ACCESS: "access-token",
+  REFRESH: "refresh-token",
+};
