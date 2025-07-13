@@ -4,10 +4,13 @@ import { Navigation, Text } from "@/components/common";
 import Column from "@/components/common/Flex/Column";
 import { color } from "@/components/desgin-system";
 import { Badge, List } from "@/components/profile";
+import { useUserQuery } from "@/services/user/queries";
 import { flex } from "@/utils";
 import styled from "styled-components";
 
 const Profile = () => {
+  const { data } = useUserQuery();
+
   return (
     <StyledProfile>
       <Text fontType="Label1" color={color.G900}>
@@ -15,9 +18,9 @@ const Profile = () => {
       </Text>
       <Column width="100%" gap={40} alignItems="center">
         <Badge
-          name="김모티"
-          email="a01082372487@gmail.com"
-          profileUrl="./profile.png"
+          name={data?.name ?? ""}
+          email={data?.email ?? ""}
+          profileUrl={data?.picture ?? "./profile.png"}
         />
         <List />
       </Column>

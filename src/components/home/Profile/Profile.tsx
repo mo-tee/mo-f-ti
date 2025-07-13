@@ -4,21 +4,24 @@ import { IconCoin } from "@/components/icon";
 import { flex } from "@/utils";
 import styled from "styled-components";
 import Badge from "./Badge/Badge";
+import { useUserQuery } from "@/services/user/queries";
 
 const Profile = () => {
+  const { data } = useUserQuery();
+
   return (
     <StyledProfile>
       <Row alignItems="center" gap={4}>
         <IconCoin width={20} height={20} />
-        <StyledPointText>3420P</StyledPointText>
+        <StyledPointText>{data?.point}P</StyledPointText>
       </Row>
       <Row width="100%" alignItems="center" justifyContent="space-between">
         <StyledProfileText>
-          김모티님
+          {data?.name}님
           <br />
           오늘의 소비를 기록해보세요
         </StyledProfileText>
-        <Badge profileUrl="/profile.png" />
+        <Badge profileUrl={data?.picture ?? "/profile.png"} />
       </Row>
     </StyledProfile>
   );

@@ -5,10 +5,10 @@ import { KEY } from "@/constants/common/constant";
 // 적용 전
 export const useUserQuery = () => {
   const { data, ...restQuery } = useQuery({
-    queryKey: [KEY.USER],
+    queryKey: [KEY.USER] as const,
     queryFn: getUser,
     retry: false,
   });
 
-  return { data, ...restQuery };
+  return { data: data?.data.data, ...restQuery };
 };
