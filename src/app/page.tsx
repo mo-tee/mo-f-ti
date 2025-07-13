@@ -10,11 +10,12 @@ import styled from "styled-components";
 import Row from "@/components/common/Flex/Row";
 import { SLIDE } from "@/constants/login/constant";
 import { useRouter } from "next/navigation";
-import { ROUTES } from "@/constants/common/constant";
+import { useGoogleLinkQuery } from "@/services/auth/queries";
 
 const Login = () => {
   const [current, setCurrent] = useState(0);
   const router = useRouter();
+  const { data } = useGoogleLinkQuery();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,7 +25,7 @@ const Login = () => {
   }, []);
 
   const handleMoveHome = () => {
-    router.push(ROUTES.HOME);
+    router.push(data?.data.data ?? "");
   };
 
   return (

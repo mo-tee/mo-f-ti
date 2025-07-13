@@ -6,15 +6,12 @@ import styled from "styled-components";
 interface ListItemProps {
   title: string;
   color: string;
+  onClick: () => void;
 }
 
-const ListItem = ({ title, color }: ListItemProps) => {
-  const handleItemClick = () => {
-    alert("준비 중 입니다.");
-  };
-
+const ListItem = ({ title, color, onClick }: ListItemProps) => {
   return (
-    <StyledListItem onClick={handleItemClick}>
+    <StyledListItem onClick={onClick}>
       <Text fontType="Body1" color={color}>
         {title}
       </Text>
