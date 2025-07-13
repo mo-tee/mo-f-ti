@@ -75,7 +75,7 @@ moti.interceptors.response.use(
         const refreshToken = Storage.getItem(TOKEN.REFRESH);
 
         const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/auth/reissue`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh`,
           null,
           {
             headers: {

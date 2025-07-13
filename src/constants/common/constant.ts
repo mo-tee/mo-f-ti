@@ -13,3 +13,8 @@ export const TOKEN = {
   ACCESS: "access-token",
   REFRESH: "refresh-token",
 };
+
+export const KEY = {
+  GOOGLELINK: "google-link",
+  USER: "user",
+};
