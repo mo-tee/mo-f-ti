@@ -13,12 +13,17 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import ExelPassword from "../ExelPassword/ExelPassword";
 import DetailReason from "../DetailReason/DetailReason";
+import { useExcelMutation } from "@/services/excel/mutations";
+import { useGoalStore } from "@/stores/goal/goal";
+import { goalDate } from "@/utils/goalDate";
 
 const GoalCreateContent = () => {
+  const [goal, setGoal] = useGoalStore();
   const [showDiary, setShowDiary] = useState(false);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [thumbnail, setThumbnail] = useState<File | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const { excelMutate } = useExcelMutation();
+
+  const passwordStr = goal.password.join("");
 
   useEffect(() => {
     const handleClickOutside = (event: Event) => {
@@ -45,21 +50,33 @@ const GoalCreateContent = () => {
     setShowDiary(true);
   };
 
-  const handleDiarySelect = (date: string) => {
-    setSelectedDate(date);
-    setShowDiary(false);
+  const handleSaveGoal = () => {
+    excelMutate({ file: goal.file, password: passwordStr });
   };
 
   return (
     <StyledGoalCreateContent>
-      <ThumbnailInput onChange={setThumbnail} />
+      <ThumbnailInput
+        onChange={(file) => {
+          setGoal((prev) => ({
+            ...prev,
+            thumnail: file,
+          }));
+        }}
+      />
       <Column gap={72} width="100%">
         <Column gap={32} width="100%">
           <Input
             label="목표"
             placeholder="목표를 입력해주세요"
-            name="goal"
-            onChange={() => {}}
+            name="title"
+            value={goal.title || ""}
+            onChange={(e) =>
+              setGoal((prev) => ({
+                ...prev,
+                title: e.target.value,
+              }))
+            }
           />
           <div ref={wrapperRef}>
             <Column gap={8} width="100%">
@@ -67,21 +84,46 @@ const GoalCreateContent = () => {
                 placeholder="기간을 입력해주세요"
                 name="date"
                 readOnly
-                value={selectedDate}
+                value={goalDate(goal.date)}
                 onClick={handleOpenDiary}
               />
-              {showDiary && <Diary onSelectDate={handleDiarySelect} />}
+              {showDiary && (
+                <Diary
+                  onSelectDate={(date: string) => {
+                    setGoal((prev) => ({
+                      ...prev,
+                      date: date,
+                    }));
+                    setShowDiary(false);
+                  }}
+                />
+              )}
             </Column>
           </div>
           <TextArea
             label="내 소비 습관 문제점"
             placeholder="내 소비 습관의 문제점을 입력해주세요"
+            name="problem"
+            value={goal.problem || ""}
+            onChange={(e) =>
+              setGoal((prev) => ({
+                ...prev,
+                problem: e.target.value,
+              }))
+            }
           />
-          <FileUploader />
+          <FileUploader
+            onFileChange={(file) => {
+              setGoal((prevGoal) => ({
+                ...prevGoal,
+                file: file,
+              }));
+            }}
+          />
           <ExelPassword />
           <DetailReason />
         </Column>
-        <Button onClick={() => {}}>소비 목표 생성</Button>
+        <Button onClick={handleSaveGoal}>소비 목표 생성</Button>
       </Column>
     </StyledGoalCreateContent>
   );

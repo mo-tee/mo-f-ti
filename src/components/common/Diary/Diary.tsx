@@ -45,7 +45,7 @@ const Diary = ({ onSelectDate }: DiaryProps) => {
       alert("오늘로부터 30일 이후의 날짜만 선택할 수 있습니다.");
     } else {
       setSelectedDate(clickedDate);
-      onSelectDate?.(clickedDate.format("MM월 DD일까지"));
+      onSelectDate?.(clickedDate.toISOString());
     }
   };
 

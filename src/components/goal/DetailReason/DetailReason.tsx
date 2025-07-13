@@ -1,12 +1,14 @@
 import { CheckBox, Text, TextArea } from "@/components/common";
 import Row from "@/components/common/Flex/Row";
 import { color } from "@/components/desgin-system";
+import { useGoalStore } from "@/stores/goal/goal";
 import { flex } from "@/utils";
 import { useState } from "react";
 import styled from "styled-components";
 
 const DetailReason = () => {
   const [checked, setChecked] = useState(false);
+  const [goal, setGoal] = useGoalStore();
 
   return (
     <StyledDetailReason>
@@ -17,7 +19,16 @@ const DetailReason = () => {
         </Text>
       </Row>
       {checked ? (
-        <TextArea placeholder="최근 1개월 간 이런 소비를 한 이유를 적어주세요" />
+        <TextArea
+          placeholder="최근 1개월 간 이런 소비를 한 이유를 적어주세요"
+          value={goal.reason || ""}
+          onChange={(e) =>
+            setGoal((prev) => ({
+              ...prev,
+              reason: e.target.value,
+            }))
+          }
+        />
       ) : (
         ""
       )}

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Text } from "@/components/common";
 import Column from "@/components/common/Flex/Column";
 import { color } from "@/components/desgin-system";
@@ -6,17 +6,21 @@ import font from "@/components/desgin-system/font";
 import { flex } from "@/utils";
 import styled from "styled-components";
 import Row from "@/components/common/Flex/Row";
+import { useGoalStore } from "@/stores/goal/goal";
 
 const ExelPassword = () => {
-  const [password, setPassword] = useState<string[]>(Array(6).fill(""));
+  const [goal, setGoal] = useGoalStore();
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
 
   const handleChange = (value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
 
-    const newPassword = [...password];
+    const newPassword = [...goal.password];
     newPassword[index] = value;
-    setPassword(newPassword);
+    setGoal((prevGoal) => ({
+      ...prevGoal,
+      password: newPassword,
+    }));
 
     if (value) {
       if (index < 5) {
@@ -31,7 +35,7 @@ const ExelPassword = () => {
     e: React.KeyboardEvent<HTMLInputElement>,
     index: number
   ) => {
-    if (e.key === "Backspace" && !password[index] && index > 0) {
+    if (e.key === "Backspace" && !goal.password[index] && index > 0) {
       inputsRef.current[index - 1]?.focus();
     }
   };
@@ -47,7 +51,7 @@ const ExelPassword = () => {
         </Text>
       </Column>
       <Row width="100%" justifyContent="space-between">
-        {password.map((val, i) => (
+        {goal.password.map((val, i) => (
           <PasswordBox
             key={i}
             maxLength={1}

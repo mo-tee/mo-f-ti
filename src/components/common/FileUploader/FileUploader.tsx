@@ -4,7 +4,11 @@ import Text from "../Text/Text";
 import styled from "styled-components";
 import { useRef, useState } from "react";
 
-const FileUploader = () => {
+interface FileUploaderProps {
+  onFileChange: (file: File | null) => void;
+}
+
+const FileUploader = ({ onFileChange }: FileUploaderProps) => {
   const [fileName, setFileName] = useState("이 곳을 눌러 파일 업로드");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -16,6 +20,9 @@ const FileUploader = () => {
     const file = e.target.files?.[0];
     if (file) {
       setFileName(file.name);
+      onFileChange(file);
+    } else {
+      onFileChange(null);
     }
   };
 
