@@ -6,7 +6,6 @@ export const useExcelMutation = () => {
   const { mutate: excelMutate, ...restMutate } = useMutation({
     mutationFn: ({ file, password }: PostExcelReq) =>
       postExcel({ file, password }),
-    onSuccess: () => {},
   });
 
   return { excelMutate, ...restMutate };
