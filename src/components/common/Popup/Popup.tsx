@@ -82,7 +82,7 @@ const StyledPopup = styled.div`
   background-color: ${color.G0};
   box-shadow: 0px -5px 8px 0px rgba(128, 128, 128, 0.05),
     0px 1px 15px 0px rgba(128, 128, 128, 0.2);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 24px 15.5px 32px 15.5px;
 `;
 
