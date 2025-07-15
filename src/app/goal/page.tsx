@@ -1,12 +1,16 @@
 "use client";
 
 import { Navigation, Text } from "@/components/common";
+import Toast from "@/components/common/Toast/Toast";
 import { color } from "@/components/desgin-system";
 import { GoalCreateContent } from "@/components/goal";
 import { flex } from "@/utils";
+import { useToast } from "@/utils/useToast";
 import styled from "styled-components";
 
 const Goal = () => {
+  const { showToast, toastMessage, toastType } = useToast();
+
   return (
     <StyledGoal>
       <Text fontType="Label1" color={color.G900}>
@@ -16,6 +20,7 @@ const Goal = () => {
         <GoalCreateContent />
       </ScrollContent>
       <Navigation />
+      {showToast && <Toast type={toastType}>{toastMessage}</Toast>}
     </StyledGoal>
   );
 };
