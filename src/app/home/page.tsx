@@ -2,6 +2,7 @@
 
 import { Navigation } from "@/components/common";
 import Column from "@/components/common/Flex/Column";
+import Toast from "@/components/common/Toast/Toast";
 import color from "@/components/desgin-system/color";
 import {
   ArchivementsBox,
@@ -9,20 +10,32 @@ import {
   ProgressList,
   SuccessList,
 } from "@/components/home";
+import { useGoalQuery } from "@/services/goal/queries";
 import { flex } from "@/utils";
+import { useToast } from "@/utils/useToast";
 import styled from "styled-components";
 
 const Home = () => {
+  const { showToast, toastMessage, toastType } = useToast();
+  const { data: AllGoal } = useGoalQuery(null);
+  const { data: OngoinGoal } = useGoalQuery("ONGOING");
+  const { data: SuccessGoal } = useGoalQuery("SUCCESS");
+
   return (
     <StyledHome>
       <Column width="100%" gap={32} alignItems="flex-start">
         <Profile />
-        <ArchivementsBox />
+        <ArchivementsBox
+          all={AllGoal?.length ?? 0}
+          ongoing={OngoinGoal?.length ?? 0}
+          success={SuccessGoal?.length ?? 0}
+        />
       </Column>
-      <ProgressList />
+      <ProgressList processList={OngoinGoal} />
       <Divider />
-      <SuccessList />
+      <SuccessList successList={SuccessGoal} />
       <Navigation />
+      {showToast && <Toast type={toastType}>{toastMessage}</Toast>}
     </StyledHome>
   );
 };
@@ -35,6 +48,7 @@ const StyledHome = styled.div`
     alignItems: "center",
   })}
   width: 100vw;
+  min-height: 100vh;
   height: 100%;
   padding: 59px 16px 149px;
   margin: 0 auto;
