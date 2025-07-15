@@ -84,7 +84,7 @@ moti.interceptors.response.use(
           }
         );
 
-        const newAccessToken = res.data.accessToken;
+        const newAccessToken = res.data.data.accessToken;
 
         if (!newAccessToken) {
           alert("새로운 엑세스 토큰을 받지 못했습니다.");
