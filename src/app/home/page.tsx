@@ -16,7 +16,7 @@ import { useToast } from "@/utils/useToast";
 import styled from "styled-components";
 
 const Home = () => {
-  const { showToast, toastMessage, toastType } = useToast();
+  const { showToast, toastMessage, toastType, width } = useToast();
   const { data: AllGoal } = useGoalQuery(null);
   const { data: OngoinGoal } = useGoalQuery("ONGOING");
   const { data: SuccessGoal } = useGoalQuery("SUCCESS");
@@ -35,7 +35,11 @@ const Home = () => {
       <Divider />
       <SuccessList successList={SuccessGoal} />
       <Navigation />
-      {showToast && <Toast type={toastType}>{toastMessage}</Toast>}
+      {showToast && (
+        <Toast type={toastType} width={width}>
+          {toastMessage}
+        </Toast>
+      )}
     </StyledHome>
   );
 };

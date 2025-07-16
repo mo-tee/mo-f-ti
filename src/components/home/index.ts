@@ -7,3 +7,4 @@ export { default as GoalDetailContent } from "./GoalDetailContent/GoalDetailCont
 export { default as GoalDetailCompleteContent } from "./GoalDetailCompleteContent/GoalDetailCompleteContent";
 export { default as CompleteSuccessContent } from "./CompleteSuccessContent/CompleteSuccessContent";
 export { default as CompleteFailContent } from "./CompleteFailContent/CompleteFailContent";
+export { default as GoalLoader } from "./GoalLoader/GoalLoader";

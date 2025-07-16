@@ -17,13 +17,19 @@ import { useGoalStore } from "@/stores/goal/goal";
 import { goalDate } from "@/utils/goalDate";
 import { useGoalMutation } from "@/services/goal/mutations";
 import { GoogleGenAI } from "@google/genai";
+import GoalLoader from "../GoalLoader/GoalLoader";
+import { useToast } from "@/utils/useToast";
+import { AxiosError } from "axios";
 
 const GoalCreateContent = () => {
   const [goal, setGoal] = useGoalStore();
   const [showDiary, setShowDiary] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const { excelMutate } = useExcelMutation();
-  const { goalMutate } = useGoalMutation();
+  const [aiLoading, setAiLoading] = useState(false);
+  const { excelMutate, isLoading: excelLoading } = useExcelMutation();
+  const { goalMutate, isLoading: goalLoading } = useGoalMutation();
+  const isAnyLoading = excelLoading || goalLoading || aiLoading;
+  const { show } = useToast();
 
   const passwordStr = goal.password.join("");
 
@@ -59,15 +65,20 @@ const GoalCreateContent = () => {
       { file: goal.file, password: passwordStr },
       {
         onSuccess: async (data) => {
-          const res = await ai.models.generateContent({
-            model: "gemini-2.0-flash-001",
-            contents: `이게 최근 한달간의 소비내역인데, ${JSON.stringify(
-              data.data,
-              null,
-              2
-            )} 분석해줘.`,
-          });
-          console.log(res.text);
+          setAiLoading(true);
+          try {
+            const res = await ai.models.generateContent({
+              model: "gemini-2.0-flash-001",
+              contents: `이게 최근 한달간의 소비내역인데, ${JSON.stringify(
+                data.data,
+                null,
+                2
+              )} 분석해줘.`,
+            });
+            console.log(res.text);
+          } finally {
+            setAiLoading(false);
+          }
           goalMutate({
             name: goal.title,
             endDate: goal.date,
@@ -87,12 +98,34 @@ const GoalCreateContent = () => {
             ],
           });
         },
+        onError: (error) => {
+          const axiosError = error as AxiosError;
+          const status = axiosError.response?.status;
+
+          switch (status) {
+            case 400:
+              show("파일이 첨부되지 않았습니다", "ERROR");
+              break;
+            case 401:
+              show("비밀번호가 올바르지 않습니다", "ERROR");
+              break;
+            case 422:
+              show("파일이 손상되어 다시 업로드해주세요", "ERROR");
+              break;
+            case 500:
+              show("파일 암호 해제에 실패했습니다", "ERROR");
+              break;
+            default:
+              show("잠시후 다시 시도해주세요", "ERROR");
+          }
+        },
       }
     );
   };
 
   return (
     <StyledGoalCreateContent>
+      <GoalLoader isOpen={isAnyLoading} />
       <Column gap={72} width="100%">
         <Column gap={32} width="100%">
           <Input

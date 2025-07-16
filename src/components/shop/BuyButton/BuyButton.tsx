@@ -2,14 +2,16 @@ import { Button } from "@/components/common";
 import { color } from "@/components/desgin-system";
 import { ROUTES } from "@/constants/common/constant";
 import { flex } from "@/utils";
+import { useToast } from "@/utils/useToast";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
 const BuyButton = () => {
+  const { show } = useToast();
   const router = useRouter();
 
   const handleBuyButtonClick = () => {
-    alert("상품이 구매되었습니다.");
+    show("상품이 구매되었습니다.", "SUCCESS");
     router.push(ROUTES.HOME);
   };
 

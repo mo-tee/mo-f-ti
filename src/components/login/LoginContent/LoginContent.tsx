@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const LoginContent = () => {
-  const { showToast, toastMessage, toastType } = useToast();
+  const { showToast, toastMessage, toastType, width } = useToast();
   const [current, setCurrent] = useState(0);
   const { loginMutate } = useGoogleLoginMutation();
 
@@ -49,7 +49,11 @@ const LoginContent = () => {
         </Column>
         <Button onClick={handleMoveHome}>구글로 모티 시작하기</Button>
       </Column>
-      {showToast && <Toast type={toastType}>{toastMessage}</Toast>}
+      {showToast && (
+        <Toast type={toastType} width={width}>
+          {toastMessage}
+        </Toast>
+      )}
     </StyledLoginContent>
   );
 };

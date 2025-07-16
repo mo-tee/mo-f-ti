@@ -12,7 +12,7 @@ import styled from "styled-components";
 
 const Profile = () => {
   const { data } = useUserQuery();
-  const { showToast, toastMessage, toastType } = useToast();
+  const { showToast, toastMessage, toastType, width } = useToast();
 
   return (
     <StyledProfile>
@@ -28,7 +28,11 @@ const Profile = () => {
         <List />
       </Column>
       <Navigation />
-      {showToast && <Toast type={toastType}>{toastMessage}</Toast>}
+      {showToast && (
+        <Toast type={toastType} width={width}>
+          {toastMessage}
+        </Toast>
+      )}
     </StyledProfile>
   );
 };

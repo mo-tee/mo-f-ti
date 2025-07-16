@@ -9,7 +9,7 @@ import { useToast } from "@/utils/useToast";
 import styled from "styled-components";
 
 const Goal = () => {
-  const { showToast, toastMessage, toastType } = useToast();
+  const { showToast, toastMessage, toastType, width } = useToast();
 
   return (
     <StyledGoal>
@@ -20,7 +20,11 @@ const Goal = () => {
         <GoalCreateContent />
       </ScrollContent>
       <Navigation />
-      {showToast && <Toast type={toastType}>{toastMessage}</Toast>}
+      {showToast && (
+        <Toast type={toastType} width={width}>
+          {toastMessage}
+        </Toast>
+      )}
     </StyledGoal>
   );
 };

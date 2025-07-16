@@ -44,7 +44,7 @@ const Diary = ({ onSelectDate }: DiaryProps) => {
     const diff = clickedDate.diff(today, "day");
 
     if (diff <= 30) {
-      show("오늘로부터 30일 이후의 날짜만 선택하실 수 있습니다", "ERROR");
+      show("오늘로부터 30일 이후만 선택할 수 있습니다", "ERROR", "295px");
     } else {
       setSelectedDate(clickedDate);
       onSelectDate?.(clickedDate.format("YYYY-MM-DD"));

@@ -32,3 +32,6 @@ export { default as IconCheckBoxBlank } from "./IconCheckBoxBlank";
 export { default as IconCheckBox } from "./IconCheckBox";
 export { default as IconError } from "./IconError";
 export { default as IconSuccess } from "./IconSuccess";
+export { default as IconSpinner01 } from "./IconSpinner01";
+export { default as IconSpinner02 } from "./IconSpinner02";
+export { default as IconSpinner03 } from "./IconSpinner03";
