@@ -4,17 +4,20 @@ import { Navigation, Text } from "@/components/common";
 import Column from "@/components/common/Flex/Column";
 import { color } from "@/components/desgin-system";
 import { Point, ShopList } from "@/components/shop";
+import { useUserQuery } from "@/services/user/queries";
 import { flex } from "@/utils";
 import styled from "styled-components";
 
 const Shop = () => {
+  const { data } = useUserQuery();
+
   return (
     <StyledShop>
       <Column gap={30} alignItems="center" width="100%">
         <Text fontType="Label1" color={color.G900}>
           상점
         </Text>
-        <Point point="3420" />
+        <Point point={data?.point ?? 0} />
       </Column>
       <ShopListScroll>
         <ShopList />

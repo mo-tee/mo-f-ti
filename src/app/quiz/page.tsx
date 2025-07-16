@@ -10,22 +10,13 @@ import { SwitchCase } from "@toss/react";
 import { SolveQuizContent, TodayQuizContent } from "@/components/quiz";
 import Header from "@/components/quiz/Header/Header";
 import SolvedQuiz from "@/components/quiz/SolvedQuiz/SolvedQuiz";
-
-const TODAY_QUIZ = {
-  date: "5월 27일",
-  quiz: "다음 중 돈을 저축하기 위한 좋은 전략이 아닌 것은?",
-  answerList: [
-    "모든 재산을 한 계좌에 몰아 저축하는 것",
-    "자동 저축 이제 활성화",
-    "미리 예산을 짜서 저축하는 것",
-    "여러 분야의 주식에 투자하는 것",
-  ],
-  answer: 1,
-  isSolved: false,
-};
+import { useQuizQuery } from "@/services/quiz/queries";
+import { AxiosError } from "axios";
 
 const Quiz = () => {
   const quizStep = useQuizStepValueStore();
+  const { data, error } = useQuizQuery();
+  const isSolved = error && (error as AxiosError).response?.status === 409;
 
   return (
     <StyledQuiz>
@@ -38,14 +29,13 @@ const Quiz = () => {
       <SwitchCase
         value={quizStep}
         caseBy={{
-          오늘의문제: TODAY_QUIZ.isSolved ? (
+          오늘의문제: isSolved ? (
             <SolvedQuiz />
           ) : (
             <TodayQuizContent
-              date={TODAY_QUIZ.date}
-              quiz={TODAY_QUIZ.quiz}
-              answerList={TODAY_QUIZ.answerList}
-              answer={TODAY_QUIZ.answer}
+              id={data?.id ?? 0}
+              quiz={data?.question}
+              answerList={data?.answers}
             />
           ),
           해결한문제: (

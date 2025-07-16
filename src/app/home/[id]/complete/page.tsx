@@ -12,12 +12,16 @@ import { IconBackArrow } from "@/components/icon";
 import { useGoalCompleteStepValueStore } from "@/stores/goal/goalCompleteStep";
 import { flex } from "@/utils";
 import { SwitchCase } from "@toss/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import styled from "styled-components";
 
 const GoalDetailComplete = () => {
   const completeStep = useGoalCompleteStepValueStore();
   const router = useRouter();
+  const pathname = usePathname();
+
+  const pathParts = pathname.split("/").filter(Boolean);
+  const id = pathParts[1];
 
   const handleBack = () => {
     router.back();
@@ -38,8 +42,8 @@ const GoalDetailComplete = () => {
         value={completeStep}
         caseBy={{
           목표달성: <GoalDetailCompleteContent />,
-          달성성공: <CompleteSuccessContent />,
-          달성실패: <CompleteFailContent />,
+          달성성공: <CompleteSuccessContent id={Number(id)} />,
+          달성실패: <CompleteFailContent id={Number(id)} />,
         }}
       />
       <Navigation />

@@ -6,12 +6,13 @@ import Row from "@/components/common/Flex/Row";
 import { color } from "@/components/desgin-system";
 import { GoalItem } from "@/components/home";
 import { IconBackArrow } from "@/components/icon";
-import { DUMMY_PROGRESS_GOAL } from "@/constants/home/mock";
+import { useGoalQuery } from "@/services/goal/queries";
 import { flex } from "@/utils";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
 const Progress = () => {
+  const { data } = useGoalQuery("ONGOING");
   const router = useRouter();
 
   const handleBack = () => {
@@ -31,12 +32,12 @@ const Progress = () => {
       </Row>
       <ScrollList>
         <Column gap={14}>
-          {DUMMY_PROGRESS_GOAL.map((goal) => (
+          {data?.map((goal) => (
             <GoalItem
               key={goal.id}
               id={goal.id}
               name={goal.name}
-              date={goal.date}
+              date={goal.endDate}
             />
           ))}
         </Column>

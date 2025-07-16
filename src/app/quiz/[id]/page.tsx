@@ -3,27 +3,22 @@
 import { Navigation, Text } from "@/components/common";
 import Column from "@/components/common/Flex/Column";
 import { color } from "@/components/desgin-system";
+import font from "@/components/desgin-system/font";
 import { IconBackArrow } from "@/components/icon";
-import { QuizListItem } from "@/components/quiz";
 import Header from "@/components/quiz/Header/Header";
+import QuizDetailItem from "@/components/quiz/QuizDetailItem/QuizDetailItem";
+import { useQuizListQuery } from "@/services/quiz/queries";
 import { flex } from "@/utils";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import styled from "styled-components";
-
-const QUIZ_DETAIL = {
-  date: "5월 27일",
-  quiz: "다음 중 돈을 저축하기 위한 좋은 전략이 아닌 것은?",
-  answerList: [
-    "모든 재산을 한 계좌에 몰아 저축하는 것",
-    "자동 저축 이제 활성화",
-    "미리 예산을 짜서 저축하는 것",
-    "여러 분야의 주식에 투자하는 것",
-  ],
-  answer: 1,
-};
 
 const QuizDetail = () => {
   const router = useRouter();
+  const path = useParams();
+  const currentId = Number(path.id);
+
+  const { data } = useQuizListQuery();
+  const quizItem = data?.find((item) => item.quiz.id === currentId);
 
   const handleMoveBack = () => {
     router.back();
@@ -42,22 +37,24 @@ const QuizDetail = () => {
           <IconBackArrow width={24} height={24} fill={color.G80} />
         </IconWrapper>
         <Column gap={20} alignItems="flex-start" width="100%">
-          <Column>
-            <Text fontType="Title3" color={color.G900}>
-              {QUIZ_DETAIL.date}
-            </Text>
-            <Text fontType="Body1" color={color.G300}>
-              {QUIZ_DETAIL.quiz}
-            </Text>
-          </Column>
-          {QUIZ_DETAIL.answerList.map((label, idx) => (
-            <QuizListItem
-              key={label}
-              label={label}
-              selected={QUIZ_DETAIL.answer === idx + 1}
-              onSelect={() => {}}
-            />
-          ))}
+          <StyledText>{quizItem?.quiz.question}</StyledText>
+          {quizItem?.quiz.answers.map((item, idx) => {
+            const isSelected = quizItem.userAnswer === idx + 1;
+            const isCorrect = quizItem.correctAnswer === idx + 1;
+
+            const showCorrect =
+              quizItem.userAnswer !== quizItem.correctAnswer && isCorrect;
+
+            return (
+              <QuizDetailItem
+                key={idx}
+                label={item.answer}
+                selected={isSelected}
+                correct={showCorrect}
+                onSelect={() => {}}
+              />
+            );
+          })}
         </Column>
       </Column>
       <Navigation />
@@ -84,4 +81,10 @@ const StyledQuizDetail = styled.div`
 const IconWrapper = styled.div`
   width: 24px;
   height: 24px;
+`;
+
+const StyledText = styled.div`
+  white-space: pre-line;
+  ${font.Title3}
+  color: ${color.G900};
 `;
