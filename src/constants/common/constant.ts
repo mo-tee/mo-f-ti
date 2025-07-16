@@ -17,4 +17,7 @@ export const TOKEN = {
 export const KEY = {
   GOOGLELINK: "google-link",
   USER: "user",
+  GOAL: "goal",
+  QUIZ: "quiz",
+  QUIZLIST: "quiz-list",
 };

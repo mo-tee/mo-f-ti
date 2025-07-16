@@ -6,13 +6,19 @@ import styled from "styled-components";
 import ListItem from "../ListItem/ListItem";
 import { color } from "@/components/desgin-system";
 
-const Research = () => {
+interface ResearchProps {
+  name?: string;
+  problem?: string;
+  analysis?: string;
+}
+
+const Research = ({ name, problem, analysis }: ResearchProps) => {
   return (
     <StyledResearch>
       <Column gap={10}>
         <IconSearch width={36} height={36} />
         <Text fontType="Title3">
-          김모티님이 작성하신 소비 문제점과
+          {name}님이 작성하신 소비 문제점과
           <br />
           AI가 분석한 소비 문제점은 다음과 같아요
         </Text>
@@ -23,13 +29,7 @@ const Research = () => {
             <Text fontType="Headline1" color={color.Primary}>
               내가 작성한 소비 문제점
             </Text>
-            <StyledText>
-              나는 무엇인지 그리워 이 많은 별빛이 내린 언덕 위에 내 이름자를
-              써보고 흙으로 덮어 버리었읍니다. 어머님, 그리고 당신은 멀리
-              북간도에 계십니다. 딴은 밤을 세워 우는 벌레는 부끄러운 이름을
-              슬퍼하는 까닭입니다. 딴은 밤을 세워 우는 벌레는 부끄러운 이름을
-              슬퍼하는 까닭입니다.
-            </StyledText>
+            <StyledText>{problem}</StyledText>
           </Column>
         </ListItem>
         <ListItem padding="15px 12px">
@@ -37,13 +37,7 @@ const Research = () => {
             <Text fontType="Headline1" color={color.Primary}>
               AI가 분석한 소비 문제점
             </Text>
-            <StyledText>
-              나는 무엇인지 그리워 이 많은 별빛이 내린 언덕 위에 내 이름자를
-              써보고 흙으로 덮어 버리었읍니다. 어머님, 그리고 당신은 멀리
-              북간도에 계십니다. 딴은 밤을 세워 우는 벌레는 부끄러운 이름을
-              슬퍼하는 까닭입니다. 딴은 밤을 세워 우는 벌레는 부끄러운 이름을
-              슬퍼하는 까닭입니다.
-            </StyledText>
+            <StyledText>{analysis}</StyledText>
           </Column>
         </ListItem>
       </Column>

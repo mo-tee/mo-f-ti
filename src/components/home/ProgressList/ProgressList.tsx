@@ -6,9 +6,13 @@ import { flex } from "@/utils";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import GoalItem from "../GoalItem/GoalItem";
-import { DUMMY_PROGRESS_GOAL } from "@/constants/home/mock";
+import { GoalList } from "@/types/goal/client";
 
-const ProgressList = () => {
+interface ProgressListProps {
+  processList?: GoalList[];
+}
+
+const ProgressList = ({ processList }: ProgressListProps) => {
   const router = useRouter();
 
   const handlePlusClick = () => {
@@ -27,12 +31,12 @@ const ProgressList = () => {
           </Text>
         </div>
       </Row>
-      {DUMMY_PROGRESS_GOAL.slice(0, 3).map((goal) => (
+      {processList?.slice(0, 3).map((goal) => (
         <GoalItem
           key={goal.id}
           id={goal.id}
           name={goal.name}
-          date={goal.date}
+          date={goal.endDate}
         />
       ))}
     </StyledProgressList>

@@ -1,23 +1,25 @@
 import { Text } from "@/components/common";
 import Column from "@/components/common/Flex/Column";
 import { color } from "@/components/desgin-system";
-import { DUMMY_METHOD } from "@/constants/home/mock";
 import { flex } from "@/utils";
 import styled from "styled-components";
 import ListItem from "../ListItem/ListItem";
 
-const Method = () => {
+interface MethodProps {
+  method?: string[];
+}
+
+const Method = ({ method }: MethodProps) => {
   return (
     <StyledMethod>
       <Text fontType="Title3" color={color.G900}>
         개선 방법
       </Text>
       <Column gap={8} width="100%">
-        {DUMMY_METHOD.map((method) => (
-          <ListItem key={method.id} padding="18px 16px">
+        {method?.map((method, idx) => (
+          <ListItem key={idx} padding="18px 16px">
             <StyledText>
-              {method.id}.{" "}
-              {method.method}
+              {idx + 1}. {method}
             </StyledText>
           </ListItem>
         ))}

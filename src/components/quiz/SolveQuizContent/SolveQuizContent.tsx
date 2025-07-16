@@ -1,17 +1,18 @@
 import styled from "styled-components";
 import { flex } from "@/utils";
 import SolveQuizListItem from "./SolveQuizListItem/SolveQuizListItem";
-import { MOCK_SOLVED_QUIZ_LIST } from "@/constants/quiz/mock";
+import { useQuizListQuery } from "@/services/quiz/queries";
 
 const SolveQuizContent = () => {
+  const { data } = useQuizListQuery();
+
   return (
     <StyledSolveQuizContent>
-      {MOCK_SOLVED_QUIZ_LIST.map((item) => (
+      {data?.map((item) => (
         <SolveQuizListItem
-          key={item.id}
-          id={item.id}
-          date={item.date}
-          quiz={item.quiz}
+          key={item.quiz.id}
+          id={item.quiz.id}
+          quiz={item.quiz.question}
         />
       ))}
     </StyledSolveQuizContent>

@@ -9,5 +9,4 @@ export { default as TextArea } from "./TextArea/TextArea";
 export { default as FileUploader } from "./FileUploader/FileUploader";
 export { default as ToggleButton } from "./Button/ToggleButton";
 export { default as Popup } from "./Popup/Popup";
-export { default as ThumbnailInput } from "./Input/ThumbnailInput";
 export { default as CheckBox } from "./CheckBox/CheckBox";

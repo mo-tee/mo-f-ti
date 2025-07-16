@@ -3,16 +3,18 @@ import ListItem from "./ListItem/ListItem";
 import { flex } from "@/utils";
 import { color } from "@/components/desgin-system";
 import { useLogoutMutation } from "@/services/auth/mutations";
+import { useToast } from "@/utils/useToast";
 
 const List = () => {
   const { logoutMutate } = useLogoutMutation();
+  const { show } = useToast();
 
   const handleLogout = () => {
     logoutMutate();
   };
 
   const handleAlready = () => {
-    alert("준비 중입니다.");
+    show("준비 중입니다");
   };
 
   return (

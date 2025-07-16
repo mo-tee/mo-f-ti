@@ -5,7 +5,6 @@ import {
   FileUploader,
   Input,
   TextArea,
-  ThumbnailInput,
 } from "@/components/common";
 import Column from "@/components/common/Flex/Column";
 import { flex } from "@/utils";
@@ -16,12 +15,15 @@ import DetailReason from "../DetailReason/DetailReason";
 import { useExcelMutation } from "@/services/excel/mutations";
 import { useGoalStore } from "@/stores/goal/goal";
 import { goalDate } from "@/utils/goalDate";
+import { useGoalMutation } from "@/services/goal/mutations";
+import { GoogleGenAI } from "@google/genai";
 
 const GoalCreateContent = () => {
   const [goal, setGoal] = useGoalStore();
   const [showDiary, setShowDiary] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const { excelMutate } = useExcelMutation();
+  const { goalMutate } = useGoalMutation();
 
   const passwordStr = goal.password.join("");
 
@@ -50,20 +52,47 @@ const GoalCreateContent = () => {
     setShowDiary(true);
   };
 
+  const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_API_KEY });
+
   const handleSaveGoal = () => {
-    excelMutate({ file: goal.file, password: passwordStr });
+    excelMutate(
+      { file: goal.file, password: passwordStr },
+      {
+        onSuccess: async (data) => {
+          const res = await ai.models.generateContent({
+            model: "gemini-2.0-flash-001",
+            contents: `이게 최근 한달간의 소비내역인데, ${JSON.stringify(
+              data.data,
+              null,
+              2
+            )} 분석해줘.`,
+          });
+          console.log(res.text);
+          goalMutate({
+            name: goal.title,
+            endDate: goal.date,
+            problem: goal.problem,
+            analysis:
+              "현재 소비 패턴에서 가장 큰 문제점은 급작스러운 고액 지출과 불규칙한 자금 흐름입니다. 특히 교통비 관련 지출(고속버스, 철도)에서 예상치 못한 고액 결제가 발생하고, 이에 맞춰 '정홍섭'님으로부터 여러 번의 입금이 이루어지는 것으로 보아, 계획되지 않은 큰 지출이 발생했을 때 잔액이 부족해지는 상황이 반복될 가능성이 있습니다. 이는 자금 관리에 어려움을 줄 수 있으며, 긴급 상황 발생 시 재정적으로 취약해질 수 있습니다.",
+            consumptionType: "EXPERIENCE",
+            consumptionHabits: [
+              "교통비 지출이 잦고 비중이 높습니다.",
+              "친목 및 여가 활동에 대한 지출이 있습니다.",
+              "다양한 경험을 추구하는 경향이 있습니다.",
+            ],
+            improvementMethods: [
+              "'경험' 소비 전 목표와 예산 설정하기",
+              "간편 결제 내역 꼼꼼히 확인하기",
+              "지출 내역을 카테고리별로 분류하고 분석하기",
+            ],
+          });
+        },
+      }
+    );
   };
 
   return (
     <StyledGoalCreateContent>
-      <ThumbnailInput
-        onChange={(file) => {
-          setGoal((prev) => ({
-            ...prev,
-            thumnail: file,
-          }));
-        }}
-      />
       <Column gap={72} width="100%">
         <Column gap={32} width="100%">
           <Input
@@ -120,7 +149,12 @@ const GoalCreateContent = () => {
               }));
             }}
           />
-          <ExelPassword />
+          <ExelPassword
+            value={goal.password}
+            onChange={(newValue) =>
+              setGoal((prev) => ({ ...prev, password: newValue }))
+            }
+          />
           <DetailReason />
         </Column>
         <Button onClick={handleSaveGoal}>소비 목표 생성</Button>

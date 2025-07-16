@@ -6,7 +6,7 @@ import { flex } from "@/utils";
 import styled from "styled-components";
 
 interface PointProps {
-  point: string;
+  point?: number;
 }
 
 const Point = ({ point }: PointProps) => {

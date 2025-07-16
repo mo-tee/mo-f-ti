@@ -5,15 +5,20 @@ import { flex } from "@/utils";
 import styled from "styled-components";
 import ListItem from "../ListItem/ListItem";
 import { color } from "@/components/desgin-system";
-import { DUMMY_POINT } from "@/constants/home/mock";
 
-const Point = () => {
+interface PoinProps {
+  name?: string;
+  type?: string;
+  point?: string[];
+}
+
+const Point = ({ name, type, point }: PoinProps) => {
   return (
     <StyledPoint>
       <Column gap={10}>
         <IconShopping width={36} height={36} />
         <Text fontType="Title3">
-          AI가 분석한 김모티님의
+          AI가 분석한 {name}님의
           <br />
           소비패턴에서의 특징은 다음과 같아요
         </Text>
@@ -22,16 +27,13 @@ const Point = () => {
         <ListItem padding="18px 16px">
           <Column>
             <Text fontType="Title3" color={color.Primary}>
-              소상공인의 희망
-            </Text>
-            <Text fontType="Body2" color={color.G600}>
-              이번 달 쇼핑에만 86%를 썼어요
+              {type}
             </Text>
           </Column>
         </ListItem>
-        {DUMMY_POINT.map((point) => (
-          <ListItem key={point.id} padding="18px 16px">
-            <StyledText>{point.point}</StyledText>
+        {point?.map((point, idx) => (
+          <ListItem key={idx} padding="18px 16px">
+            <StyledText>{point}</StyledText>
           </ListItem>
         ))}
       </Column>

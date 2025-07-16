@@ -2,18 +2,22 @@ import { ColorMediumButton, Text } from "@/components/common";
 import Column from "@/components/common/Flex/Column";
 import Row from "@/components/common/Flex/Row";
 import { color } from "@/components/desgin-system";
-import { ROUTES } from "@/constants/common/constant";
+import { useGoalFailMutation } from "@/services/goal/mutations";
 import { flex } from "@/utils";
-import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
 interface GiveUpModalProps {
   isOpen: boolean;
   onClose: () => void;
+  id: number;
 }
 
-const GiveUpModal = ({ isOpen, onClose }: GiveUpModalProps) => {
-  const router = useRouter();
+const GiveUpModal = ({ isOpen, onClose, id }: GiveUpModalProps) => {
+  const { goalFailMutate } = useGoalFailMutation(id);
+
+  const handleGoalFail = () => {
+    goalFailMutate();
+  };
 
   return (
     <BlurBackground $isOpen={isOpen}>
@@ -30,10 +34,7 @@ const GiveUpModal = ({ isOpen, onClose }: GiveUpModalProps) => {
         </Column>
         <Row gap={12} alignItems="center" width="100%">
           <ColorMediumButton
-            onClick={() => {
-              onClose();
-              router.push(ROUTES.HOME);
-            }}
+            onClick={handleGoalFail}
             color={color.Secondary}
             backgroundColor="rgba(241, 38, 38, 0.1)"
           >
@@ -42,7 +43,6 @@ const GiveUpModal = ({ isOpen, onClose }: GiveUpModalProps) => {
           <ColorMediumButton
             onClick={() => {
               onClose();
-              router.push(ROUTES.HOME);
             }}
             color={color.Primary}
             backgroundColor="rgba(13, 128, 242, 0.1)"

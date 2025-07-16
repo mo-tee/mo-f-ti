@@ -1,19 +1,28 @@
 import { color } from "@/components/desgin-system";
-import { flex } from "@/utils";
+import { flex, getLevelByPercent } from "@/utils";
 import styled from "styled-components";
 import Tier from "./Tier/Tier";
 import ProgressBar from "./ProgressBar/ProgressBar";
 import Column from "@/components/common/Flex/Column";
 import GoalStatusBoard from "./GoalStatusBoard/GoalStatusBoard";
 
-const ArchivementsBox = () => {
+interface ArchivementsBoxProps {
+  all: number;
+  ongoing: number;
+  success: number;
+}
+
+const ArchivementsBox = ({ all, ongoing, success }: ArchivementsBoxProps) => {
+  const percent = all === 0 ? 0 : Math.round((success / all) * 100);
+  const level = getLevelByPercent(all, success);
+
   return (
     <StyledArchivementsBox>
       <Column gap={-4} width="100%" alignItems="center">
-        <Tier level={1} />
-        <ProgressBar percent={62} />
+        <Tier level={level} />
+        <ProgressBar percent={percent} />
       </Column>
-      <GoalStatusBoard />
+      <GoalStatusBoard all={all} ongoing={ongoing} success={success} />
     </StyledArchivementsBox>
   );
 };

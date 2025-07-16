@@ -9,8 +9,7 @@ export const getGoogleLink = async () => {
 };
 
 export const postGoogle = async (code: string) => {
-  const data = await moti.post("/auth/google", { code });
-
+  const data = await moti.post(`/auth/google?code=${code}`);
   return data;
 };
 

@@ -1,11 +1,10 @@
 import { Text } from "@/components/common";
 import Column from "@/components/common/Flex/Column";
-import Row from "@/components/common/Flex/Row";
 import { color } from "@/components/desgin-system";
 import { IconTrash } from "@/components/icon";
 import { ROUTES } from "@/constants/common/constant";
+import { useDeleteGoalMutation } from "@/services/goal/mutations";
 import { flex } from "@/utils";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import styled from "styled-components";
@@ -21,6 +20,7 @@ const GoalItem = ({ id, name, date }: GoalItemProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const startX = useRef(0);
   const router = useRouter();
+  const { deleteGoalMutate } = useDeleteGoalMutation(id);
 
   function getClientX(
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
@@ -59,6 +59,11 @@ const GoalItem = ({ id, name, date }: GoalItemProps) => {
     router.push(`${ROUTES.HOME}/${id}`);
   };
 
+  const handleDeleteGoalItem = () => {
+    deleteGoalMutate();
+    setDragX(0);
+  };
+
   return (
     <GoalItemWrapper
       onMouseDown={handleDragStart}
@@ -70,22 +75,19 @@ const GoalItem = ({ id, name, date }: GoalItemProps) => {
       onTouchEnd={handleDragEnd}
     >
       <StyledGoalItem style={{ transform: `translateX(${dragX}px)` }}>
-        <Row alignItems="flex-start" gap={12}>
-          <Image width={70} height={70} alt="item" src="/coffee.png" />
-          <Column gap={4} alignItems="flex-start">
-            <StyledText>{name}</StyledText>
-            <Text fontType="Body2" color={color.G80}>
-              ~{date}
-            </Text>
-          </Column>
-        </Row>
+        <Column gap={4} alignItems="flex-start">
+          <StyledText>{name}</StyledText>
+          <Text fontType="Body2" color={color.G80}>
+            ~{date}
+          </Text>
+        </Column>
         <DetailButton onClick={handleMoveDetailPage}>
           <Text fontType="Label3" color={color.G300}>
             상세보기
           </Text>
         </DetailButton>
       </StyledGoalItem>
-      <DeleteButton $show={dragX === -45} onClick={() => setDragX(0)}>
+      <DeleteButton $show={dragX === -45} onClick={handleDeleteGoalItem}>
         <IconTrash width={20} height={20} />
       </DeleteButton>
     </GoalItemWrapper>

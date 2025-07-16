@@ -8,12 +8,16 @@ import { useOverlay } from "@toss/use-overlay";
 import styled from "styled-components";
 import GiveUpModal from "../GiveUpModal/GiveUpModal";
 
-const CompleteFailContent = () => {
+interface CompleteFailContentProps {
+  id: number;
+}
+
+const CompleteFailContent = ({ id }: CompleteFailContentProps) => {
   const overlay = useOverlay();
 
   const handleOpenGiveUpModal = () => {
     overlay.open(({ isOpen, close }) => (
-      <GiveUpModal isOpen={isOpen} onClose={close} />
+      <GiveUpModal isOpen={isOpen} onClose={close} id={id} />
     ));
   };
 

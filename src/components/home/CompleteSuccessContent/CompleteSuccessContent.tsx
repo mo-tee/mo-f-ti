@@ -2,16 +2,19 @@ import { Button, Text } from "@/components/common";
 import Column from "@/components/common/Flex/Column";
 import { color } from "@/components/desgin-system";
 import { IconPurse } from "@/components/icon";
-import { ROUTES } from "@/constants/common/constant";
+import { useGoalSuccessMutation } from "@/services/goal/mutations";
 import { flex } from "@/utils";
-import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
-const CompleteSuccessContent = () => {
-  const router = useRouter();
+interface CompleteSuccessContentProps {
+  id: number;
+}
+
+const CompleteSuccessContent = ({ id }: CompleteSuccessContentProps) => {
+  const { goalSuccessMutate } = useGoalSuccessMutation(id);
 
   const handleMoveHome = () => {
-    router.push(ROUTES.HOME);
+    goalSuccessMutate();
   };
 
   return (

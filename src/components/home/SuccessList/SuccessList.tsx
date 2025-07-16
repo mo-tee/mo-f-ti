@@ -6,9 +6,13 @@ import { flex } from "@/utils";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import GoalItem from "../GoalItem/GoalItem";
-import { DUMMY_SUCCESS_GOAL } from "@/constants/home/mock";
+import { GoalList } from "@/types/goal/client";
 
-const SuccessList = () => {
+interface SuccessListProps {
+  successList?: GoalList[];
+}
+
+const SuccessList = ({ successList }: SuccessListProps) => {
   const router = useRouter();
 
   const handlePlusClick = () => {
@@ -27,12 +31,12 @@ const SuccessList = () => {
           </Text>
         </div>
       </Row>
-      {DUMMY_SUCCESS_GOAL.slice(0, 3).map((goal) => (
+      {successList?.slice(0, 3).map((goal) => (
         <GoalItem
           key={goal.id}
           id={goal.id}
           name={goal.name}
-          date={goal.date}
+          date={goal.endDate}
         />
       ))}
     </StyledSuccessList>

@@ -12,6 +12,10 @@ import { ROUTES } from "@/constants/common/constant";
 import { useSetGoalCompleteStepStore } from "@/stores/goal/goalCompleteStep";
 import { useOverlay } from "@toss/use-overlay";
 import GiveUpModal from "../GiveUpModal/GiveUpModal";
+import { useGoalDetailQuery } from "@/services/goal/queries";
+import dayjs from "dayjs";
+import { useUserQuery } from "@/services/user/queries";
+import { consumptionTypeKorMap } from "@/constants/home/constant";
 
 interface GoalDetailContentProps {
   id: number;
@@ -21,6 +25,12 @@ const GoalDetailContent = ({ id }: GoalDetailContentProps) => {
   const router = useRouter();
   const overlay = useOverlay();
   const setCompleteStep = useSetGoalCompleteStepStore();
+  const { data } = useGoalDetailQuery(id);
+  const { data: user } = useUserQuery();
+
+  const formatEndDate = data?.endDate
+    ? dayjs(data.endDate).format("YYYY.MM.DD")
+    : "";
 
   const handleMoveGoalDetailComplete = () => {
     router.push(`${ROUTES.HOME}/${id}/complete`);
@@ -29,7 +39,7 @@ const GoalDetailContent = ({ id }: GoalDetailContentProps) => {
 
   const handleOpenGiveUpModal = () => {
     overlay.open(({ isOpen, close }) => (
-      <GiveUpModal isOpen={isOpen} onClose={close} />
+      <GiveUpModal isOpen={isOpen} onClose={close} id={id} />
     ));
   };
 
@@ -37,9 +47,9 @@ const GoalDetailContent = ({ id }: GoalDetailContentProps) => {
     <StyledGoalDetailContent>
       <Column gap={20} width="100%">
         <Column gap={4}>
-          <StyleText>30살에 유럽일주 가기</StyleText>
+          <StyleText>{data?.name}</StyleText>
           <Text fontType="Body2" color={color.G100}>
-            ~2026.01.01
+            ~{formatEndDate}
           </Text>
           <Row gap={12}>
             <ColorMediumButton
@@ -59,9 +69,21 @@ const GoalDetailContent = ({ id }: GoalDetailContentProps) => {
           </Row>
         </Column>
       </Column>
-      <Point />
-      <Research />
-      <Method />
+      <Point
+        name={user?.name}
+        type={
+          data?.consumptionType
+            ? consumptionTypeKorMap[data.consumptionType]
+            : undefined
+        }
+        point={data?.consumptionHabitList}
+      />
+      <Research
+        name={user?.name}
+        problem={data?.problem}
+        analysis={data?.analysis}
+      />
+      <Method method={data?.improvementMethodList} />
     </StyledGoalDetailContent>
   );
 };

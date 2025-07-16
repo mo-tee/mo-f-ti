@@ -8,61 +8,62 @@ import { useState } from "react";
 import { useOverlay } from "@toss/use-overlay";
 import CorrectPopup from "../CorrectPopup/CorrectPopup";
 import ErrorPopup from "../ErrorPopup/ErrorPopup";
+import { Answer } from "@/types/quiz/client";
+import { useQuizSolveMutation } from "@/services/quiz/mutations";
 
 interface TodayQuizProps {
-  date: string;
-  quiz: string;
-  answerList: string[];
-  answer: number;
+  id: number;
+  quiz?: string;
+  answerList?: Answer[];
 }
 
-const TodayQuizContent = ({
-  date,
-  quiz,
-  answerList,
-  answer,
-}: TodayQuizProps) => {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+const TodayQuizContent = ({ id, quiz, answerList }: TodayQuizProps) => {
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const overlay = useOverlay();
+  const { quizSolveMutate } = useQuizSolveMutation(id ?? 0, selectedIndex);
 
-  const handleOpenAnswer = () => {
-    if (selectedIndex === null) {
+  const handleSubmitAnswer = () => {
+    if (selectedIndex === 0) {
       alert("정답을 선택하고 제출해주세요.");
       return null;
     }
 
-    overlay.open(({ isOpen, close }) =>
-      selectedIndex === answer ? (
-        <CorrectPopup isOpen={isOpen} onClose={close} />
-      ) : (
-        <ErrorPopup isOpen={isOpen} onClose={close} />
-      )
-    );
+    quizSolveMutate(undefined, {
+      onSuccess: (res) => {
+        const { correctAnswer } = res.data.data;
+
+        overlay.open(({ isOpen, close }) =>
+          selectedIndex === Number(correctAnswer) ? (
+            <CorrectPopup isOpen={isOpen} onClose={close} />
+          ) : (
+            <ErrorPopup isOpen={isOpen} onClose={close} />
+          )
+        );
+      },
+      onError: () => {
+        alert("서버 에러가 발생했습니다.");
+      },
+    });
   };
 
   return (
     <StyledTodayQuizContent>
       <Column gap={20}>
-        <Column alignItems="flex-start">
-          <Text fontType="Title3" color={color.G900}>
-            {date}
-          </Text>
-          <Text fontType="Body1" color={color.G300}>
-            {quiz}
-          </Text>
-        </Column>
+        <Text fontType="Title3" color={color.G900}>
+          Q. {quiz}
+        </Text>
         <Column gap={12}>
-          {answerList.map((label, idx) => (
+          {answerList?.map((label, idx) => (
             <QuizListItem
-              key={label}
-              label={label}
+              key={label.answerNumber}
+              label={label.answer}
               selected={selectedIndex === idx + 1}
               onSelect={() => setSelectedIndex(idx + 1)}
             />
           ))}
         </Column>
       </Column>
-      <Button onClick={handleOpenAnswer}>정답 제출</Button>
+      <Button onClick={handleSubmitAnswer}>정답 제출</Button>
     </StyledTodayQuizContent>
   );
 };

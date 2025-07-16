@@ -6,6 +6,7 @@ import { IconArrowLeft, IconArrowRight } from "@/components/icon";
 import Column from "../Flex/Column";
 import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
+import { useToast } from "@/utils/useToast";
 
 interface DiaryProps {
   onSelectDate: (date: string) => void;
@@ -16,6 +17,7 @@ const week = ["일", "월", "화", "수", "목", "금", "토"];
 const Diary = ({ onSelectDate }: DiaryProps) => {
   const [baseDate, setBaseDate] = useState(dayjs());
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+  const { show } = useToast();
 
   const year = baseDate.year();
   const month = baseDate.month();
@@ -42,10 +44,10 @@ const Diary = ({ onSelectDate }: DiaryProps) => {
     const diff = clickedDate.diff(today, "day");
 
     if (diff <= 30) {
-      alert("오늘로부터 30일 이후의 날짜만 선택할 수 있습니다.");
+      show("오늘로부터 30일 이후의 날짜만 선택하실 수 있습니다", "ERROR");
     } else {
       setSelectedDate(clickedDate);
-      onSelectDate?.(clickedDate.toISOString());
+      onSelectDate?.(clickedDate.format("YYYY-MM-DD"));
     }
   };
 

@@ -3,20 +3,26 @@ import { color } from "@/components/desgin-system";
 import { flex } from "@/utils";
 import styled from "styled-components";
 
-const GoalStatusBoard = () => {
+interface GoalStatusBoardProps {
+  all: number;
+  ongoing: number;
+  success: number;
+}
+
+const GoalStatusBoard = ({ all, ongoing, success }: GoalStatusBoardProps) => {
   return (
     <StyledGoalStatusBoard>
       <Column gap={8} alignItems="center">
         <TitleText>생성한 목표</TitleText>
-        <CountText>21</CountText>
+        <CountText>{all}</CountText>
       </Column>
       <Column gap={8} alignItems="center">
         <TitleText>진행 중인 목표</TitleText>
-        <CountText>11</CountText>
+        <CountText>{ongoing}</CountText>
       </Column>
       <Column gap={8} alignItems="center">
         <TitleText>성공한 목표</TitleText>
-        <CountText>10</CountText>
+        <CountText>{success}</CountText>
       </Column>
     </StyledGoalStatusBoard>
   );
