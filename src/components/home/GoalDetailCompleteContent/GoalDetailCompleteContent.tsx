@@ -12,13 +12,19 @@ import GoalLoader from "../GoalLoader/GoalLoader";
 import { useState } from "react";
 import { AxiosError } from "axios";
 import { useToast } from "@/utils/useToast";
+import { useGoalDetailQuery } from "@/services/goal/queries";
 
-const GoalDetailCompleteContent = () => {
+interface GoalDetailCompleteContentProps {
+  id: number;
+}
+
+const GoalDetailCompleteContent = ({ id }: GoalDetailCompleteContentProps) => {
   const [improve, setImprove] = useImprovementStore();
   const [aiLoading, setAiLoading] = useState(false);
   const setCompleteStep = useSetGoalCompleteStepStore();
   const { excelMutate, isLoading } = useExcelMutation();
   const { show } = useToast();
+  const { data: detail } = useGoalDetailQuery(id);
 
   const passwordStr = improve.password.join("");
   const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_API_KEY });
@@ -33,18 +39,22 @@ const GoalDetailCompleteContent = () => {
           try {
             const res = await ai.models.generateContent({
               model: "gemini-2.0-flash-001",
-              contents: `이게 최근 한달간의 소비내역인데, ${JSON.stringify(
-                data.data,
-                null,
-                2
-              )} 분석해줘.`,
+              contents: `절대 설명 없이 '달성성공'인지 '달성실패'인지만 반환하세요.
+              입력된 목표 생성 이후의 소비내역과 목표명, 소비 유형, 소비 특징, 사용자가 작성한 문제점, AI가 분석한 문제점을 바탕으로 개선이 되었는지 안되었는지를 알려줘.
+
+              입력값:
+              소비내역: ${JSON.stringify(data.data, null, 2)}
+              목표명: ${detail?.name}
+              소비유형: ${detail?.consumptionType}
+              소비특징: ${detail?.consumptionHabitList}
+              사용자가 작성한 문제점: ${detail?.problem}
+              AI가 분석한 문제점: ${detail?.analysis}`,
             });
-            console.log(res.text);
+            const isSuccess = res.text?.trim() === "달성성공";
+            setCompleteStep(isSuccess ? "달성성공" : "달성실패");
           } finally {
             setAiLoading(false);
           }
-          const isSuccess = Math.random() > 0.5;
-          setCompleteStep(isSuccess ? "달성성공" : "달성실패");
         },
         onError: (error) => {
           const axiosError = error as AxiosError;

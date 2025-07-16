@@ -69,34 +69,88 @@ const GoalCreateContent = () => {
           try {
             const res = await ai.models.generateContent({
               model: "gemini-2.0-flash-001",
-              contents: `이게 최근 한달간의 소비내역인데, ${JSON.stringify(
-                data.data,
-                null,
-                2
-              )} 분석해줘.`,
+              contents: `절대 설명 없이 아래와 같은 JSON만 반환하세요.
+              입력된 최근 한달간의 소비내역, 소비 목표, 사용자가 생각한 문제점, 추가 사유를 바탕으로
+아래 7가지 소비 유형 중에서 **가장 관련이 깊은 한 가지**를 반드시 선택해야 해.
+- SAVING: 알뜰하고 신중하게 소비하는 유형 (저축/적은 지출)
+- INVESTMENT: 미래를 위한 투자(주식, 펀드, 금융 등)
+- FLEX: 큰 고민 없이 다양한 곳에 소비하는 유형
+- EXPERIENCE: 여행, 취미, 문화활동에 소비가 집중
+- FOOD: 음식, 외식, 배달 등 식비 비중이 높음
+- IMPROVEMENT: 자기계발, 교육, 건강에 투자
+- SHOPPING: 패션, 생활용품, 잡화 등 쇼핑 비중이 높음
+
+특히, 소비내역에서 **지출의 비중이 가장 큰 영역**이나,
+지출 빈도가 높은 카테고리**를 바탕으로 신중하게 분석해서 소비 유형을 골라라.
+
+분석한 문제점은 매우 자세할 수록 좋으니까 자세하게 적어줘, 개선 방법과 분석한 문제점, 유형에 대해서 너무 사용자가 분석한 문제점을 바탕이 아닌 소비 내역을 바탕으로 적어줘.
+
+Return ONLY valid JSON, NO explanation, NO code block, NO markdown, JSON ONLY.  
+JSON 포맷, 필드명, 순서, 예시를 그대로 따르세요.  
+(만약 설명이 붙거나 JSON이 아니면 무시됩니다.)
+
+예시:
+{
+    "name": "지갑 벌크업 레츠고",
+    "endDate": "2025-07-30",
+    "problem": "충동적인 구매가 너무 많아서 쓸모없는걸 계속 사는편",
+    "analysis": "충동적인 구매 많음, 스트레스를 구매로 푸는 편",
+    "consumptionType": "SHOPPING",
+    "consumptionHabits": [
+        "충동 구매가 많아요.",
+        "스트레스를 받을 때 소비가 증가해요.",
+        "쇼핑 빈도가 높아요."
+    ],
+    "improvementMethods": [
+        "구매 전 3번 생각하기",
+        "다른 스트레스 해소법 찾기",
+        "필요성 점검하기"
+    ]
+}
+
+입력값:
+소비내역: ${JSON.stringify(data.data, null, 2)}
+목표명: ${goal.title}
+목표기간: ${goal.date}
+소비 문제점: ${goal.problem}
+추가 내용: ${goal.reason}
+
+분석 후 반드시 위와 같은 JSON 구조로만 답변하세요.`,
             });
-            console.log(res.text);
+            let text = res.text?.trim() ?? "";
+
+            if (text.startsWith("```")) {
+              text = text
+                .replace(/```[a-zA-Z]*\n?/, "")
+                .replace(/```$/, "")
+                .trim();
+            }
+
+            let aiResult = null;
+
+            try {
+              aiResult = JSON.parse(text);
+            } catch {
+              const jsonMatch = text.match(/\{[\s\S]*\}/);
+              if (jsonMatch) {
+                aiResult = JSON.parse(jsonMatch[0]);
+              } else {
+                return;
+              }
+            }
+
+            goalMutate({
+              name: aiResult.name,
+              endDate: aiResult.endDate,
+              problem: aiResult.problem,
+              analysis: aiResult.analysis,
+              consumptionType: aiResult.consumptionType,
+              consumptionHabits: aiResult.consumptionHabits,
+              improvementMethods: aiResult.improvementMethods,
+            });
           } finally {
             setAiLoading(false);
           }
-          goalMutate({
-            name: goal.title,
-            endDate: goal.date,
-            problem: goal.problem,
-            analysis:
-              "현재 소비 패턴에서 가장 큰 문제점은 급작스러운 고액 지출과 불규칙한 자금 흐름입니다. 특히 교통비 관련 지출(고속버스, 철도)에서 예상치 못한 고액 결제가 발생하고, 이에 맞춰 '정홍섭'님으로부터 여러 번의 입금이 이루어지는 것으로 보아, 계획되지 않은 큰 지출이 발생했을 때 잔액이 부족해지는 상황이 반복될 가능성이 있습니다. 이는 자금 관리에 어려움을 줄 수 있으며, 긴급 상황 발생 시 재정적으로 취약해질 수 있습니다.",
-            consumptionType: "EXPERIENCE",
-            consumptionHabits: [
-              "교통비 지출이 잦고 비중이 높습니다.",
-              "친목 및 여가 활동에 대한 지출이 있습니다.",
-              "다양한 경험을 추구하는 경향이 있습니다.",
-            ],
-            improvementMethods: [
-              "'경험' 소비 전 목표와 예산 설정하기",
-              "간편 결제 내역 꼼꼼히 확인하기",
-              "지출 내역을 카테고리별로 분류하고 분석하기",
-            ],
-          });
         },
         onError: (error) => {
           const axiosError = error as AxiosError;

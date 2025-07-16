@@ -41,7 +41,7 @@ const GoalDetailComplete = () => {
       <SwitchCase
         value={completeStep}
         caseBy={{
-          목표달성: <GoalDetailCompleteContent />,
+          목표달성: <GoalDetailCompleteContent id={Number(id)} />,
           달성성공: <CompleteSuccessContent id={Number(id)} />,
           달성실패: <CompleteFailContent id={Number(id)} />,
         }}
