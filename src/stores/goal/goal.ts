@@ -9,7 +9,6 @@ import {
 const goalAtomState = atom<Goal>({
   key: "goal-atom",
   default: {
-    thumnail: null,
     title: "",
     date: "",
     problem: "",
