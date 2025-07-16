@@ -42,15 +42,20 @@ const QuizDetail = () => {
             const isSelected = quizItem.userAnswer === idx + 1;
             const isCorrect = quizItem.correctAnswer === idx + 1;
 
-            const showCorrect =
+            const showRed =
+              quizItem.userAnswer !== quizItem.correctAnswer && isSelected;
+            const showBlue =
               quizItem.userAnswer !== quizItem.correctAnswer && isCorrect;
+            const correctMatched =
+              quizItem.userAnswer === quizItem.correctAnswer && isSelected;
 
             return (
               <QuizDetailItem
                 key={idx}
                 label={item.answer}
                 selected={isSelected}
-                correct={showCorrect}
+                red={showRed}
+                blue={showBlue || correctMatched}
                 onSelect={() => {}}
               />
             );
