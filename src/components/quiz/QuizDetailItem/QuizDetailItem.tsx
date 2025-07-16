@@ -10,6 +10,8 @@ interface QuizDetailItemProps {
   onSelect: () => void;
   label: string;
   selected: boolean;
+  radioColor: string;
+  showCorrectText?: boolean;
 }
 
 const QuizDetailItem = ({
@@ -18,21 +20,19 @@ const QuizDetailItem = ({
   onSelect,
   label,
   selected,
+  radioColor,
+  showCorrectText,
 }: QuizDetailItemProps) => {
   return (
     <Column gap={8} width="100%" alignItems="flex-start">
       <StyledQuizListItem onClick={onSelect} red={red} blue={blue}>
-        <CustomRadio
-          $checked={selected}
-          $color={blue ? color.G50 : red ? color.Secondary : color.G40}
-          $blue={blue}
-        />
+        <CustomRadio $checked={selected} $color={radioColor} $blue={blue} />
 
         <Text fontType="Body2" color={color.G900}>
           {label}
         </Text>
       </StyledQuizListItem>
-      {blue && (
+      {showCorrectText && (
         <Text fontType="Label3" color="#0D80F2">
           퀴즈 정답
         </Text>

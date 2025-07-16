@@ -41,21 +41,37 @@ const QuizDetail = () => {
           {quizItem?.quiz.answers.map((item, idx) => {
             const isSelected = quizItem.userAnswer === idx + 1;
             const isCorrect = quizItem.correctAnswer === idx + 1;
+            const isSolved = quizItem.userAnswer === quizItem.correctAnswer;
 
-            const showRed =
-              quizItem.userAnswer !== quizItem.correctAnswer && isSelected;
-            const showBlue =
-              quizItem.userAnswer !== quizItem.correctAnswer && isCorrect;
-            const correctMatched =
-              quizItem.userAnswer === quizItem.correctAnswer && isSelected;
+            let red = false;
+            let blue = false;
+            let radioColor = color.G40;
+
+            if (isSolved) {
+              blue = isSelected;
+              if (isSelected) {
+                radioColor = "#0d80f2";
+              }
+            } else {
+              red = isSelected;
+              blue = isCorrect;
+              if (isSelected) {
+                radioColor = color.Secondary;
+              } else if (isCorrect) {
+                radioColor = color.G50;
+              }
+            }
+            const showCorrectText = !isSolved && isCorrect;
 
             return (
               <QuizDetailItem
                 key={idx}
                 label={item.answer}
                 selected={isSelected}
-                red={showRed}
-                blue={showBlue || correctMatched}
+                red={red}
+                blue={blue}
+                showCorrectText={showCorrectText}
+                radioColor={radioColor}
                 onSelect={() => {}}
               />
             );
